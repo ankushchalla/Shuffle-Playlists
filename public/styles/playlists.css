@@ -11,10 +11,22 @@ h1 {
 
 .list-group-item {
     font-family: 'Montserrat', sans-serif;
-    background-color: #1DB954;
-    color: #191414;
+    background-color: #191414;
+    color: white;
+    border-bottom: 1px solid white;
+    outline: none;
 }
 
 .list-group-item:hover {
-    background-color: white
+    background-color: #1DB954;
+    color: white;
+}
+
+#last {
+    border: 0px;
+}
+
+.chosen, .chosen:hover {
+    background-color: white;
+    color: #191414;
 }
