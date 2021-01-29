@@ -1,21 +1,12 @@
-const express = require('express'); 
-const getToken = require('./Components/auth');
-const getTrackList = require('./Components/get_playlists');
-const {createQueue, addToQueue} = require('./Components/queue');
-
+const express = require('express');
+const cors = require('cors');
 
 let app = express();
-app.use(express.static(__dirname + '/public/'));
+app.use(express.static(__dirname + '/public'))
+    .use(cors());
 
-require('./Components/htmlRoutes')(app);
-
-async function main() {
-    let scope = 'user-modify-playback-state playlist-read-private';
-    let token = await getToken(app, scope);
-    let tracks = await getTrackList(token);
-    let queue = createQueue(tracks);
-    addToQueue(queue, token);
-}
+require('./Routes/htmlRoutes')(app);
+require('./Components/auth')(app);
 
 console.log('Listening on 8888');
 app.listen(8888);

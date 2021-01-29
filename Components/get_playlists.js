@@ -2,28 +2,6 @@
  
 const request = require('request');
 
-// Get names and track references of user playlists. 
-function getUserPlaylists(token) {
-    return new Promise((resolve) => {
-        let options = {
-            url: 'https://api.spotify.com/v1/me/playlists',
-            headers: { 'Authorization': 'Bearer ' + token },
-            json: true
-        };
-        request.get(options, function (req, res) {
-            let allPlaylists = res.body.items.map(playlist => {
-                return {
-                    name: playlist.name,
-                    tracks: playlist.tracks.href
-                };
-            })
-            // Returning first two playlists just for server-side developing.
-            // Actual application will return user selected playlists.
-            resolve([allPlaylists[1], allPlaylists[2]])
-        })
-    })
-}
-
 function getTracks(playlist_1, playlist_2, token) {
     let options_1 = {
         url: playlist_1.tracks,
@@ -60,4 +38,4 @@ async function getTrackList(token) {
     return tracks;
 }
 
-module.exports = getTrackList;
+module.exports = getUserPlaylists;
