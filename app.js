@@ -3,10 +3,14 @@ const cors = require('cors');
 
 let app = express();
 app.use(express.static(__dirname + '/public'))
-    .use(cors());
+    .use(cors())
+    .use(express.urlencoded({ extended: true }))
+    .use(express.json());
+    
 
 require('./Routes/htmlRoutes')(app);
 require('./Components/auth')(app);
+require('./Components/get_playlists')(app);
 
 console.log('Listening on 8888');
 app.listen(8888);

@@ -2,15 +2,25 @@
  
 const request = require('request');
 
-function getTracks(playlist_1, playlist_2, token) {
+module.exports = (app) => {
+    app.post('/queue', async (req, res) => {
+        let playlistData = req.body.playlists;
+        let access_token = req.body.access_token;
+        let allTracks = await getTracks(playlistData[0], playlistData[1], access_token);
+        console.log("allTracks", allTracks);
+    })
+}
+
+// Returns two arrays containing track_uri's of inputted playlists respectively. 
+function getTracks(playlist_1, playlist_2, access_token) {
     let options_1 = {
         url: playlist_1.tracks,
-        headers: { 'Authorization': 'Bearer ' + token },
+        headers: { 'Authorization': 'Bearer ' + access_token },
         json: true
     };
     let options_2 = {
         url: playlist_2.tracks,
-        headers: { 'Authorization': 'Bearer ' + token },
+        headers: { 'Authorization': 'Bearer ' + access_token },
         json: true
     };
     let promise_1 = new Promise(resolve => {
@@ -32,10 +42,8 @@ function getTracks(playlist_1, playlist_2, token) {
     return Promise.all([promise_1, promise_2]);
 }
 
-async function getTrackList(token) {
-    let [playlist_1, playlist_2] = await getUserPlaylists(token);
-    let tracks = await getTracks(playlist_1, playlist_2, token);
+async function getTrackList(access_token) {
+    let [playlist_1, playlist_2] = await getUserPlaylists(access_token);
+    let tracks = await getTracks(playlist_1, playlist_2, access_token);
     return tracks;
 }
-
-module.exports = getUserPlaylists;
