@@ -24,7 +24,7 @@ function addToQueue(queue, token) {
         json: true
     };
     // Figure out a way to add to queue in parallel while maintaining order. 
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < queue.length; i++) {
         let track = queue[i];
         options.url = `https://api.spotify.com/v1/me/player/queue?uri=${track}`;
         request.post(options, function(error, response, body) {

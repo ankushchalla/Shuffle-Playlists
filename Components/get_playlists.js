@@ -1,13 +1,16 @@
 // Gets songs in the two playlists user selects.
  
 const request = require('request');
+const {createQueue, addToQueue} = require('./queue');
 
 module.exports = (app) => {
+    // Uses playlist data to add songs to queue of user. See queue.js for queue details.
     app.post('/queue', async (req, res) => {
         let playlistData = req.body.playlists;
         let access_token = req.body.access_token;
         let allTracks = await getTracks(playlistData[0], playlistData[1], access_token);
-        console.log("allTracks", allTracks);
+        let queue = createQueue(allTracks);
+        addToQueue(queue, access_token);
     })
 }
 
@@ -42,8 +45,3 @@ function getTracks(playlist_1, playlist_2, access_token) {
     return Promise.all([promise_1, promise_2]);
 }
 
-async function getTrackList(access_token) {
-    let [playlist_1, playlist_2] = await getUserPlaylists(access_token);
-    let tracks = await getTracks(playlist_1, playlist_2, access_token);
-    return tracks;
-}
