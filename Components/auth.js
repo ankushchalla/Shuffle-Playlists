@@ -14,7 +14,7 @@ module.exports = (app) => {
             'response_type': 'code',
             // The user is redirected to the below URI after granting/denying permission.
             'redirect_uri': redirect_uri,
-            'scope': 'user-modify-playback-state playlist-read-private'
+            'scope': 'user-modify-playback-state playlist-read-private user-read-playback-state'
         });
         res.redirect('https://accounts.spotify.com/authorize?' + queries);
     });

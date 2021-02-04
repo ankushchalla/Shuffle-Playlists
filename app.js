@@ -9,7 +9,7 @@ app.use(express.static(__dirname + '/public'))
     .use(express.json());
     
 
-require('./Routes/htmlRoutes')(app);
+require('./Components/htmlRoutes')(app);
 require('./Components/auth')(app);
 require('./Components/get_playlists')(app);
 

@@ -8,9 +8,10 @@ module.exports = (app) => {
     app.post('/queue', async (req, res) => {
         let playlistData = req.body.playlists;
         let access_token = req.body.access_token;
+        let deviceId = req.body.deviceId;
         let allTracks = await getTracks(playlistData[0], playlistData[1], access_token);
         let queue = createQueue(allTracks);
-        addToQueue(queue, access_token);
+        addToQueue(queue, access_token, deviceId);
     })
 }
 
