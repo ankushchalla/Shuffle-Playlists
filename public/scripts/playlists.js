@@ -49,6 +49,8 @@ function getUserPlaylists() {
 
 // When the user clicks submit, the two playlists they have chosen are sent to the server. 
 function send(deviceId) {
+    // Make the appropriate html/css changes, then complete server-side work. 
+    $(".info").addClass("display-4").removeClass("display-1").text("Your queue is being updated.");
     let data = {
         playlists: [],
         access_token: access_token, 
@@ -61,12 +63,16 @@ function send(deviceId) {
         }
         i++;
     });
+    $(".list-group").remove();
+    $("button").remove();
     // Send the playlists chosen by user to the server, which does the rest of the work.
     // Route in routes/api_routes/add_playlists.js
     $.ajax({
         type: "POST", 
         url: '/queue', 
         data: data, 
+    }).then(function(response) {
+        $(".info").text("Your queue has been updated :)")
     });
 }
 
