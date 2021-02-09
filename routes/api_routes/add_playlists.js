@@ -1,7 +1,7 @@
 // Gets songs in the two playlists user selects.
  
 const request = require('request');
-const {createQueue, addToQueue} = require('./queue');
+const {createQueue, addToQueue} = require('../../Components/queue');
 
 module.exports = (app) => {
     // Uses playlist data to add songs to queue of user. See queue.js for queue details.

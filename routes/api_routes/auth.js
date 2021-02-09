@@ -38,7 +38,8 @@ module.exports = (app) => {
         };
 
         request.post(authOptions, function (error, response, body) {
-            // We finally have the access token needed to make calls to the Spotify API.
+            // We now have the access token needed to make calls to the Spotify API.
+            // Serve token to browser along with a choose-playlists page. See routes/htmlRoutes.js.
             res.redirect('/playlists/?' +
                 querystring.stringify({
                     access_token: body.access_token

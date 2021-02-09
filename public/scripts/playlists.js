@@ -62,7 +62,7 @@ function send(deviceId) {
         i++;
     });
     // Send the playlists chosen by user to the server, which does the rest of the work.
-    // Route in get_playlists.js
+    // Route in routes/api_routes/add_playlists.js
     $.ajax({
         type: "POST", 
         url: '/queue', 

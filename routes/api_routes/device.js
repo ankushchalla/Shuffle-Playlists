@@ -1,7 +1,7 @@
 /*
     Module gets device id of user's current active device.
+    Called by public/scripts/playlists.js
 */
-
 
 const request = require('request');
 const querystring = require('querystring');
@@ -17,7 +17,6 @@ module.exports = (app) => {
         request.get(options).on('response', function (response) {
             let devices = response.devices;
             for (let i = 0; i < devices.length; i++) {
-                // active = chosen device. Doesn't have to be playing. If open but not chosen, active = false.
                 if (devices[i].is_active) {
                     res.redirect('some url', querystring.stringify({
                         access_token: body.access_token,
