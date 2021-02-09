@@ -1,16 +1,20 @@
+
+// The main route basically ends here.
 // Gets songs in the two playlists user selects.
  
 const request = require('request');
-const {createQueue, addToQueue} = require('./queue');
+const {createQueue, addToQueue} = require('../../Components/queue');
 
 module.exports = (app) => {
-    // Uses playlist data to add songs to queue of user. See queue.js for queue details.
+    // Uses playlist data to add songs to queue of user. See queue.js for queue-creating details.
     app.post('/queue', async (req, res) => {
         let playlistData = req.body.playlists;
         let access_token = req.body.access_token;
+        let deviceId = req.body.deviceId;
         let allTracks = await getTracks(playlistData[0], playlistData[1], access_token);
         let queue = createQueue(allTracks);
-        addToQueue(queue, access_token);
+        let status = await addToQueue(queue, access_token, deviceId);
+        res.sendStatus(status);
     })
 }
 

@@ -11,4 +11,12 @@ module.exports = (app) => {
         res.sendFile(path.join(__dirname, '../public/playlists.html'));
     })
 
+    app.get('/device', (req, res) => {
+        res.sendFile(path.join(__dirname, '../public/device.html'));
+    })
+
+    app.get('/end', (req, res) => {
+        res.sendFile(path.join(__dirname, '../public/end.html'));
+    })
+
 }

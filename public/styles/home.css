@@ -1,0 +1,23 @@
+body {
+    background-color: #191414;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+}
+
+button {
+    width: 10vw;
+    color: white;
+    font-weight: 500;
+    font-size: large;
+    padding: 5px 0px;
+    border-radius: 30px;
+    outline: none;
+    background-color: #1DB954;
+    border: 3px solid white;
+}
+
+a:focus, button:focus, button:visited {
+    outline: none;
+    border: 5px solid white;
+
+}

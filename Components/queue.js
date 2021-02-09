@@ -17,20 +17,24 @@ function createQueue(tracks) {
     return queue;
 }
 
-function addToQueue(queue, token) {
-    let options = {
-        url: '',
-        headers: { 'Authorization': 'Bearer ' + token },
-        json: true
-    };
-    // Figure out a way to add to queue in parallel while maintaining order. 
-    for (let i = 0; i < queue.length; i++) {
-        let track = queue[i];
-        options.url = `https://api.spotify.com/v1/me/player/queue?uri=${track}`;
-        request.post(options, function(error, response, body) {
-            
-        })
-    }
+function addToQueue(queue, token, deviceId) {
+    return new Promise(resolve => {
+        let options = {
+            url: '',
+            headers: { 'Authorization': 'Bearer ' + token },
+            json: true
+        };
+        // Figure out a way to add to queue in parallel while maintaining order. 
+        for (let i = 0; i < queue.length; i++) {
+            let track = queue[i];
+            options.url = `https://api.spotify.com/v1/me/player/queue?uri=${track}&device_id=${deviceId}`;
+            request.post(options, function(error, response, body) {
+                if (error) throw error;
+            });
+        }
+        resolve(200);
+    });
+    
 }
 
 module.exports = {

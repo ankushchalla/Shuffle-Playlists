@@ -14,7 +14,7 @@ module.exports = (app) => {
             'response_type': 'code',
             // The user is redirected to the below URI after granting/denying permission.
             'redirect_uri': redirect_uri,
-            'scope': 'user-modify-playback-state playlist-read-private'
+            'scope': 'user-modify-playback-state playlist-read-private user-read-playback-state'
         });
         res.redirect('https://accounts.spotify.com/authorize?' + queries);
     });
@@ -38,7 +38,8 @@ module.exports = (app) => {
         };
 
         request.post(authOptions, function (error, response, body) {
-            // We finally have the access token needed to make calls to the Spotify API.
+            // We now have the access token needed to make calls to the Spotify API.
+            // Serve token to browser along with a choose-playlists page. See routes/htmlRoutes.js.
             res.redirect('/playlists/?' +
                 querystring.stringify({
                     access_token: body.access_token

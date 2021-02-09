@@ -3,6 +3,30 @@ let params = new URLSearchParams(window.location.search);
 let access_token = params.get('access_token');
 let playlists;
 
+// Gets device id of user's current active device.
+function getDeviceId() {
+    return new Promise(resolve => {
+        let options = {
+            method: "GET",
+            url: 'https://api.spotify.com/v1/me/player/devices',
+            headers: { 'Authorization': 'Bearer ' + access_token },
+            json: true
+        };
+        $.ajax(options).then(function(response) {
+            let devices = response.devices;
+            if (devices.length == 1) {
+                return resolve(devices[0].id)
+            }
+            for (let i = 0; i < devices.length; i++) {
+                // active = playing...probably.
+                if (devices[i].is_active) {
+                    return resolve(devices[i].id);
+                }
+            }
+        });
+    });
+}
+
 function getUserPlaylists() {
     return new Promise((resolve) => {
         let options = {
@@ -24,10 +48,13 @@ function getUserPlaylists() {
 }
 
 // When the user clicks submit, the two playlists they have chosen are sent to the server. 
-function send() {
+function send(deviceId) {
+    // Make the appropriate html/css changes, then complete server-side work. 
+    $(".info").addClass("display-4").removeClass("display-1").text("Your queue is being updated.");
     let data = {
         playlists: [],
-        access_token: access_token
+        access_token: access_token, 
+        deviceId: deviceId
     };
     let i = 0;
     $(".list-group").children().each(function() {
@@ -36,15 +63,21 @@ function send() {
         }
         i++;
     });
+    $(".list-group").remove();
+    $("button").remove();
     // Send the playlists chosen by user to the server, which does the rest of the work.
+    // Route in routes/api_routes/add_playlists.js
     $.ajax({
         type: "POST", 
         url: '/queue', 
         data: data, 
+    }).then(function(response) {
+        $(".info").text("Your queue has been updated :)")
     });
 }
 
 async function main() {
+    let deviceId = await getDeviceId();
     playlists = await getUserPlaylists();
     playlists.sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1);
     for (let i = 0; i < playlists.length; i++) {
@@ -61,7 +94,10 @@ async function main() {
     let button = $("<div>").addClass("row d-flex text-center mb-5").append($("<a>").append($("<button>").text("Submit")));
     $(".container").append(button);
 
-    button.click(send);
+    button.click(function(event) {
+        event.preventDefault();
+        send(deviceId);
+    });
 
 }
 
