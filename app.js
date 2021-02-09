@@ -14,6 +14,6 @@ require('./routes/api_routes/auth')(app);
 require('./routes/api_routes/add_playlists')(app);
 require('./routes/api_routes/device')(app);
 
-// console.log('Listening on ' + PORT);
+console.log('Listening on ' + PORT);
 app.listen(PORT);
 
