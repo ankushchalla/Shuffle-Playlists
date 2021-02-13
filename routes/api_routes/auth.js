@@ -1,9 +1,8 @@
 // Module that gets authorization token needed for Spotify API calls. 
 
 const client_id = 'f8c1c68915eb4329be5b05bf7c7c61d4'; // Your client id
-const client_secret = '41517c14f1314f9d9eae45ffbf789edb'; // Your secret
-const redirect_uri = 'https://stormy-scrubland-36302.herokuapp.com/callback'; // Your redirect uri
-// const redirect_uri = 'http://localhost:8888/callback'; // Used for developement.
+const client_secret = process.env.CLIENT_SECRET; // Your secret
+const redirect_uri = 'http://localhost:8888/callback' || process.env.CALLBACK; // Your redirect uri
 
 const request = require('request'); // "Request" library
 const querystring = require('querystring');
@@ -15,7 +14,7 @@ module.exports = (app) => {
             'response_type': 'code',
             // The user is redirected to the below URI after granting/denying permission.
             'redirect_uri': redirect_uri,
-            'scope': 'user-modify-playback-state playlist-read-private user-read-playback-state'
+            'scope': 'user-modify-playback-state playlist-read-private user-read-playback-state user-read-private'
         });
         res.redirect('https://accounts.spotify.com/authorize?' + queries);
     });

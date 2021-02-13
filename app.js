@@ -9,10 +9,11 @@ app.use(express.static(__dirname + '/public'))
     .use(express.json());
     
 
-require('./routes/htmlRoutes')(app);
+require('./routes/html_routes')(app);
 require('./routes/api_routes/auth')(app);
 require('./routes/api_routes/add_playlists')(app);
 require('./routes/api_routes/device')(app);
+require('./routes/error_handling')(app);
 
 console.log('Listening on ' + PORT);
 app.listen(PORT);

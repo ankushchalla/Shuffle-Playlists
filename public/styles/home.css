@@ -4,20 +4,12 @@ body {
     color: white;
 }
 
-button {
-    width: 10vw;
+.btn {
     color: white;
     font-weight: 500;
     font-size: large;
-    padding: 5px 0px;
     border-radius: 30px;
     outline: none;
     background-color: #1DB954;
     border: 3px solid white;
-}
-
-a:focus, button:focus, button:visited {
-    outline: none;
-    border: 5px solid white;
-
 }
