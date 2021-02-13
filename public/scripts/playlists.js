@@ -3,6 +3,21 @@ let params = new URLSearchParams(window.location.search);
 let access_token = params.get('access_token');
 let playlists;
 
+// Some API calls only work if the user has a Spotify premium account.
+function isPremium() {
+    return new Promise(resolve => {
+        let options = {
+            method: "GET",
+            url: 'https://api.spotify.com/v1/me',
+            headers: { 'Authorization': 'Bearer ' + access_token },
+            json: true
+        };
+        $.ajax(options).then(function(response) {
+            resolve(response.product === "premium");
+        });
+    });
+}
+
 // Gets device id of user's current active device.
 function getDeviceId() {
     return new Promise(resolve => {
@@ -77,6 +92,10 @@ function send(deviceId) {
 }
 
 async function main() {
+    // Redirect to the error page if the user doesn't have Spotify premium.
+    let isPremium = await isPremium();
+    if (!isPremium) window.location.replace('/error/non_premium')
+
     let deviceId = await getDeviceId();
     playlists = await getUserPlaylists();
     playlists.sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1);
@@ -91,7 +110,10 @@ async function main() {
             $(this).toggleClass("chosen");
         });
     }
-    let button = $("<div>").addClass("row d-flex text-center mb-5").append($("<a>").append($("<button>").text("Submit")));
+    let button = $("<div>").addClass("row d-flex text-center mb-5").append($("<a>").append($("<button>").text("Submit").attr({
+        type: "button", 
+        class: "btn btn-light"
+    })));
     $(".container").append(button);
 
     button.click(function(event) {
@@ -102,4 +124,6 @@ async function main() {
 }
 
 main();
+
+
 
