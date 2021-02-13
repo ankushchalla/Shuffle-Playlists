@@ -31,7 +31,7 @@ h1 {
     color: #191414;
 }
 
-button {
+.btn {
     color: white;
     font-weight: 500;
     font-size: large;
@@ -40,3 +40,4 @@ button {
     background-color: #1DB954;
     border: 3px solid white;
 }
+

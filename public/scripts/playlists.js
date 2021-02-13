@@ -20,7 +20,7 @@ function isPremium() {
 
 // Gets device id of user's current active device.
 function getDeviceId() {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
         let options = {
             method: "GET",
             url: 'https://api.spotify.com/v1/me/player/devices',
@@ -31,6 +31,9 @@ function getDeviceId() {
             let devices = response.devices;
             if (devices.length == 1) {
                 return resolve(devices[0].id)
+            }
+            else if (devices.length == 0) {
+                reject(new ReferenceError("No devices found."));
             }
             for (let i = 0; i < devices.length; i++) {
                 // active = playing...probably.
@@ -43,14 +46,15 @@ function getDeviceId() {
 }
 
 function getUserPlaylists() {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         let options = {
             method: "GET",
-            url: 'https://api.spotify.com/v1/me/playlists',
+            url: 'https://api.spotify.com/v1/me/playlists?limit=50',
             headers: { 'Authorization': 'Bearer ' + access_token },
             json: true
         };
         $.ajax(options).then(function (res) {
+            if (res.items.length === 0) reject(new RangeError("No playlists found."));
             let allPlaylists = res.items.map(playlist => {
                 return {
                     name: playlist.name,
@@ -93,11 +97,19 @@ function send(deviceId) {
 
 async function main() {
     // Redirect to the error page if the user doesn't have Spotify premium.
-    let isPremium = await isPremium();
-    if (!isPremium) window.location.replace('/error/non_premium')
+    let hasPremium = await isPremium();
+    if (!hasPremium) window.location.replace('/error/non_premium');
 
-    let deviceId = await getDeviceId();
-    playlists = await getUserPlaylists();
+    let deviceId;
+    try {
+        deviceId = await getDeviceId();
+        playlists = await getUserPlaylists();
+    }
+    catch(err) {
+        if (err instanceof ReferenceError) window.location.replace('/error/no_device');
+        if (err instanceof RangeError) window.location.replace('/error/no_playlists');
+    }
+    
     playlists.sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1);
     for (let i = 0; i < playlists.length; i++) {
         let playlist = playlists[i];
