@@ -4,6 +4,14 @@ body {
     color: white;
 }
 
+#description {
+    font-weight: 400;
+}
+
+#reminder {
+    font-weight: 500;
+}
+
 .btn {
     color: white;
     font-weight: 500;
