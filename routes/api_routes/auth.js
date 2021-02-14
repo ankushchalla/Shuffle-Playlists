@@ -1,6 +1,9 @@
 // Module that gets authorization token needed for Spotify API calls. 
 
 const client_id = 'f8c1c68915eb4329be5b05bf7c7c61d4'; // Your client id
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 const client_secret = process.env.CLIENT_SECRET; // Your secret
 const redirect_uri = process.env.CALLBACK || 'http://localhost:8888/callback'; // Your redirect uri
 
