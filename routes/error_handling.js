@@ -11,5 +11,9 @@ module.exports = (app) => {
         if (req.params.error_type === "no_playlists") {
             res.sendFile(path.join(__dirname, '../public/error_pages/no_playlists.html'))
         }
+
+        if (req.params.error_type === "not_two") {
+            res.sendFile(path.join(__dirname, '../public/error_pages/not_two.html'))
+        }
     });
 }

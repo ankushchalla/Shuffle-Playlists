@@ -43,6 +43,9 @@ async function send(allPlaylists, deviceId) {
         i++;
     });
     $(".list").remove();
+    if (data.playlists.length !== 2) {
+        throw new RangeError("Number of playlists chosen != 2.");
+    }
 
     let maxTotal;
     data.playlists[0].total <= data.playlists[1].total ? maxTotal = data.playlists[0].total : maxTotal = data.playlists[1].total
