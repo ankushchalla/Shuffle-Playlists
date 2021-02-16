@@ -8,9 +8,9 @@ Open the [website](https://stormy-scrubland-36302.herokuapp.com/) on any device.
 
 # Screenshots
 The following screenshots demonstrate application functionality.
-![Screenshot 1](https://github.com/ankushchalla/Shuffle-Playlists/tree/master/screenshots/screenshot_1.png)
-![Screenshot 2](https://github.com/ankushchalla/Shuffle-Playlists/tree/master/screenshots/screenshot_2.png)
-![Screenshot 3](https://github.com/ankushchalla/Shuffle-Playlists/tree/master/screenshots/screenshot_3.png)
+![Screenshot 1](https://github.com/ankushchalla/Shuffle-Playlists/blob/master/screenshots/screenshot_1.png)
+![Screenshot 2](https://github.com/ankushchalla/Shuffle-Playlists/blob/master/screenshots/screenshot_2.png)
+![Screenshot 3](https://github.com/ankushchalla/Shuffle-Playlists/blob/master/screenshots/screenshot_3.png)
 
 
 
