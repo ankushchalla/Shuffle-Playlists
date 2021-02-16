@@ -4,11 +4,11 @@ const shuffle = require('./shuffle');
 
 // Takes two arrays of tracks and creates a big shuffled list out of them.
 // In final queue: A song from one playlist is followed by a song from the other playlist.
-function createQueue(tracks) {
+function createQueue(tracks, fullLength) {
+    let length = Math.floor(fullLength/2)
     let queue = [];
     let [playlist_1, playlist_2] =[tracks[0], tracks[1]];
-    let length;
-    playlist_1.length < playlist_2.length ? length = playlist_1.length : length = playlist_2.length;
+    // playlist_1.length < playlist_2.length ? length = playlist_1.length : length = playlist_2.length;
     [playlist_1, playlist_2] = [shuffle(playlist_1), shuffle(playlist_2)];
     for (let i = 0; i < length; i++) {
         queue.push(playlist_1[i]);

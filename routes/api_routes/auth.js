@@ -1,8 +1,16 @@
+const fs = require('fs');
 // Module that gets authorization token needed for Spotify API calls. 
+const client_id = 'f8c1c68915eb4329be5b05bf7c7c61d4'; 
 
-const client_id = 'f8c1c68915eb4329be5b05bf7c7c61d4'; // Your client id
-const client_secret = process.env.CLIENT_SECRET; // Your secret
-const redirect_uri = process.env.CALLBACK || 'http://localhost:8888/callback'; // Your redirect uri
+//Poor man's devlopement enviroment.
+if (fs.existsSync('client_secret.txt')) {
+    console.log("inside if");
+    client_secret = fs.readFileSync('client_secret.txt', 'utf-8');
+}
+else {
+    client_secret = process.env.CLIENT_SECRET;
+}
+const redirect_uri = process.env.CALLBACK || 'http://localhost:8888/callback';
 
 const request = require('request'); // "Request" library
 const querystring = require('querystring');

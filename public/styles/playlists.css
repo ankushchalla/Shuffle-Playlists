@@ -2,24 +2,25 @@
 body {
     background-color: #191414;
     font-family: 'Montserrat', sans-serif;
+    color: white;
 }
 
 h1 {
     text-align: center;
-    color: white;
 }
 
 .list-group-item {
-    font-family: 'Montserrat', sans-serif;
-    background-color: #191414;
     color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    background-color: #191414;
     border-bottom: 1px solid white;
     outline: none;
 }
 
 .list-group-item:hover {
-    background-color: #1DB954;
     color: white;
+    background-color: #1DB954;
 }
 
 #last {
@@ -36,8 +37,15 @@ h1 {
     font-weight: 500;
     font-size: large;
     border-radius: 30px;
-    outline: none;
     background-color: #1DB954;
     border: 3px solid white;
 }
 
+#length {
+    width: 1.5em;
+    text-align: center;
+    background-color: white;
+    color: #191414;
+    border-radius: 15px;
+    padding: 0 3px;
+}
