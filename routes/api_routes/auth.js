@@ -1,10 +1,11 @@
 const fs = require('fs');
 // Module that gets authorization token needed for Spotify API calls. 
 const client_id = 'f8c1c68915eb4329be5b05bf7c7c61d4'; 
-let client_secret;
-// Poor man's devlopement enviroment.
-if (fs.existsSync('../../client_secret.txt')) {
-    client_secret = fs.readFileSync('../../cleaclient_secret.txt', 'utf-8');
+
+//Poor man's devlopement enviroment.
+if (fs.existsSync('client_secret.txt')) {
+    console.log("inside if");
+    client_secret = fs.readFileSync('client_secret.txt', 'utf-8');
 }
 else {
     client_secret = process.env.CLIENT_SECRET;
